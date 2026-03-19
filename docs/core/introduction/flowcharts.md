@@ -81,7 +81,7 @@ flowchart TD
     B[Proceso\neg: pago = cantidad * precio]
     C{Decisión\neg: ¿x mayor que 0?}
     D[/Entrada\neg: Ingresar nombre/]
-    E@{ shape: doc, label: "Documento\neg: Mostrar resultado" }
+    E@{ shape: doc, label: "Imprimir\neg: \"Hola mundo\"" }
 ```
 
 | Forma | Nombre | Descripción |
@@ -90,7 +90,7 @@ flowchart TD
 | Rectángulo | **Proceso** | Operación o cálculo. Ejemplo: `pago = cantidad * precio` |
 | Rombo | **Decisión** | Evalúa una condición. Tiene dos salidas: **Sí** y **No**. |
 | Paralelogramo | **Entrada** | Ingreso de datos por teclado. Ejemplo: `Ingresar nombre` |
-| Rectángulo ondulado | **Documento / Imprimir** | Muestra información en pantalla. Equivale a `print()` en Python. |
+| Rectángulo ondulado | **Imprimir** | Muestra información en pantalla. Equivale a `print()` en Python. El contenido siempre va entre comillas. |
 
 ### Líneas de flujo { #line-symbols }
 
@@ -104,7 +104,7 @@ flowchart TD
 1. Todo diagrama tiene un **único inicio** y un **único fin**.
 2. Los **datos de entrada** (del usuario) se capturan con el símbolo de entrada y se almacenan en variables.
 3. Los **cálculos y asignaciones** se representan con el rectángulo de proceso.
-4. Las **salidas** (mostrar resultados) usan el símbolo de documento.
+4. Las **salidas** (mostrar resultados) usan el símbolo de imprimir, con el contenido siempre entre comillas.
 5. Las **decisiones** usan el rombo, con ramas etiquetadas "Sí" y "No".
 6. El flujo se recorre siempre desde el **inicio** hasta el **fin** siguiendo las flechas.
 
@@ -129,12 +129,12 @@ Se evalúan **después** de los aritméticos y producen un resultado lógico (ve
 
 | Operador | Significado |
 | :---: | --- |
-| `=` | Igual a |
-| `≠` | Distinto de |
+| `==` | Igual a |
+| `!=` | Distinto de |
 | `<` | Menor que |
 | `>` | Mayor que |
-| `≤` | Menor o igual que |
-| `≥` | Mayor o igual que |
+| `<=` | Menor o igual que |
+| `>=` | Mayor o igual que |
 
 ### Operadores lógicos { #logical-precedence }
 
@@ -142,12 +142,12 @@ Se evalúan **después** de los de comparación y permiten combinar condiciones.
 
 | Prioridad | Operador | Descripción |
 | :---: | :---: | --- |
-| 1 (mayor) | `NO` | Niega la condición |
-| 2 | `Y` | Verdadero solo si **ambas** condiciones son verdaderas |
-| 3 (menor) | `O` | Verdadero si **al menos una** condición es verdadera |
+| 1 (mayor) | `not` | Niega la condición |
+| 2 | `and` | Verdadero solo si **ambas** condiciones son verdaderas |
+| 3 (menor) | `or` | Verdadero si **al menos una** condición es verdadera |
 
 !!! info "Orden general"
-    `()` → `^` → `×` `/` → `+` `-` → comparación → `NO` → `Y` → `O`
+    `()` → `^` → `×` `/` → `+` `-` → comparación → `not` → `and` → `or`
 
 ### Ejercicios { #precedence-exercises }
 
@@ -351,16 +351,21 @@ flowchart TD
     flowchart TD
         A([INICIO]) --> B@{ shape: doc, label: "\"Ingrese tipo de cliente\"" }
         B --> C[/tipo_cliente/]
-        C --> D{"¿tipo_cliente == estudiante?"}
+        C --> B2@{ shape: doc, label: "\"Ingrese cantidad de libros\"" }
+        B2 --> C2[/cant_libros/]
+        C2 --> D{"¿tipo_cliente == estudiante?"}
         D -->|Sí| E["descuento = 0.15"]
         D -->|No| F{"¿tipo_cliente == docente?"}
         F -->|Sí| G["descuento = 0.20"]
-        F -->|No| H["descuento = 0.25"]
-        E --> I["precio_final = 5000 * (1 - descuento)"]
-        G --> I
-        H --> I
-        I --> J@{ shape: doc, label: "precio_final" }
-        J --> K([FIN])
+        F -->|No| H{"¿tipo_cliente == club?"}
+        H -->|Sí| I["descuento = 0.25"]
+        H -->|No| J["descuento = 0"]
+        E --> K["precio_final = cant_libros * 5000 * (1 - descuento)"]
+        G --> K
+        I --> K
+        J --> K
+        K --> L@{ shape: doc, label: "\"El precio final es:\", precio_final" }
+        L --> M([FIN])
     ```
 
 ### Ejemplo 3: Validación de un número { #example-validation }
@@ -400,7 +405,7 @@ Calcular el sueldo bruto y líquido de cada empleado. El valor hora es \$2.500 y
         F --> G[/cant_horas/]
         G --> H["sueldo_bruto = cant_horas * 2500"]
         H --> I["sueldo_liquido = sueldo_bruto * 0.8"]
-        I --> J@{ shape: doc, label: "sueldo_bruto, sueldo_liquido" }
+        I --> J@{ shape: doc, label: "\"Sueldo bruto:\", sueldo_bruto, \"Sueldo líquido:\", sueldo_liquido" }
         J --> K["indice = indice + 1"]
         K --> E
         E -->|No| L([FIN])

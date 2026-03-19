@@ -206,7 +206,7 @@ Cada símbolo del diagrama de flujo tiene su equivalente directo en Python.
         A([INICIO]) --> B[/Ingresar x/]
         B --> C[/Ingresar m y c/]
         C --> D["y ← m × x + c"]
-        D --> E[\"Mostrar: y"\]
+        D --> E@{ shape: doc, label: "\"El resultado es:\", y" }
         E --> F([FIN])
     ```
 
@@ -232,11 +232,11 @@ La estructura `if` en Python corresponde al rombo de decisión del diagrama:
     flowchart TD
         A([INICIO]) --> B[/Ingresar x/]
         B --> C{"¿x < 20?"}
-        C -->|Sí| D[\"Mostrar: Es menor que 20"\]
+        C -->|Sí| D@{ shape: doc, label: "\"Es menor que 20\"" }
         C -->|No| E
         D --> E
         E --> F{"¿x < 10?"}
-        F -->|Sí| G[\"Mostrar: Es menor que 10"\]
+        F -->|Sí| G@{ shape: doc, label: "\"Es menor que 10\"" }
         F -->|No| H([FIN])
         G --> H
     ```
@@ -275,10 +275,10 @@ El bucle `while` repite un bloque mientras la condición sea verdadera:
     flowchart TD
         A([INICIO]) --> B["n ← 5"]
         B --> C{"¿n > 0?"}
-        C -->|Sí| D[\"Mostrar: n"\]
+        C -->|Sí| D@{ shape: doc, label: "n" }
         D --> E["n ← n - 1"]
         E --> C
-        C -->|No| F[\"Mostrar: Fin"\]
+        C -->|No| F@{ shape: doc, label: "\"Fin\"" }
         F --> G([FIN])
     ```
 
@@ -334,10 +334,10 @@ Solicitar un número entre 1 y 9. Si el usuario ingresa un valor fuera del rango
             C -->|Sí| D[/Ingresar num/]
             D --> E{"¿num >= 1\ny num <= 9?"}
             E -->|Sí| F["noValido ← False"]
-            E -->|No| G[\"Mostrar: Error"\]
+            E -->|No| G@{ shape: doc, label: "\"Error: el número está fuera del rango.\"" }
             F --> C
             G --> C
-            C -->|No| H[\"Mostrar: num es correcto"\]
+            C -->|No| H@{ shape: doc, label: "\"El número\", num, \"es correcto.\"" }
             H --> I([FIN])
         ```
 
@@ -386,7 +386,7 @@ Recibir un número mayor a cero, extraer sus dígitos y mostrarlo invertido. Si 
             C -->|Sí| D[/Ingresar num/]
             D --> E{"¿Es número\ny num > 0?"}
             E -->|Sí| F["noValido ← False"]
-            E -->|No| G[\"Mostrar: Error"\]
+            E -->|No| G@{ shape: doc, label: "\"Error\"" }
             F --> C
             G --> C
             C -->|No| H["ni ← 0"]
@@ -395,7 +395,7 @@ Recibir un número mayor a cero, extraer sus dígitos y mostrarlo invertido. Si 
             J --> K["ni ← ni × 10 + d"]
             K --> L["num ← num // 10"]
             L --> I
-            I -->|No| M[\"Mostrar: ni"\]
+            I -->|No| M@{ shape: doc, label: "ni" }
             M --> N([FIN])
         ```
 
