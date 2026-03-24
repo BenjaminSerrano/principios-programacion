@@ -895,13 +895,13 @@ Clasificar una temperatura ingresada por el usuario según los siguientes rangos
     ``` mermaid
     flowchart TD
         A([INICIO]) --> B[/Ingresar temperatura/]
-        B --> C{"¿temp < 0?"}
+        B --> C{"temp < 0"}
         C -->|Sí| D[\"Mostrar: Bajo cero"\]
-        C -->|No| E{"¿temp <= 15?"}
+        C -->|No| E{"temp <= 15"}
         E -->|Sí| F[\"Mostrar: Frío"\]
-        E -->|No| G{"¿temp <= 25?"}
+        E -->|No| G{"temp <= 25"}
         G -->|Sí| H[\"Mostrar: Templado"\]
-        G -->|No| I{"¿temp <= 35?"}
+        G -->|No| I{"temp <= 35"}
         I -->|Sí| J[\"Mostrar: Cálido"\]
         I -->|No| K[\"Mostrar: Muy caluroso"\]
         D --> L([FIN])
@@ -942,14 +942,14 @@ Una ferretería aplica descuentos según el monto de compra:
     ``` mermaid
     flowchart TD
         A([INICIO]) --> B[/Ingresar monto/]
-        B --> C{"¿monto < 10000?"}
-        C -->|Sí| D["descuento ← 0"]
-        C -->|No| E{"¿monto < 50000?"}
-        E -->|Sí| F["descuento ← 0.05"]
-        E -->|No| G{"¿monto < 100000?"}
-        G -->|Sí| H["descuento ← 0.10"]
-        G -->|No| I["descuento ← 0.15"]
-        D --> J["total ← monto × (1 - descuento)"]
+        B --> C{"monto < 10000"}
+        C -->|Sí| D["descuento = 0"]
+        C -->|No| E{"monto < 50000"}
+        E -->|Sí| F["descuento = 0.05"]
+        E -->|No| G{"monto < 100000"}
+        G -->|Sí| H["descuento = 0.10"]
+        G -->|No| I["descuento = 0.15"]
+        D --> J["total = monto * (1 - descuento)"]
         F --> J
         H --> J
         I --> J

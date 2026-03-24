@@ -17,6 +17,196 @@ Cuando queremos hacer algo más de una vez, necesitamos recurrir a un **bucle**.
 
 ## La sentencia `while` { #while }
 
+### Diagrama de flujo { #while-flowchart }
+
+La estructura `while` repite un bloque **mientras** la condición sea verdadera. La condición se evalúa **antes** de cada iteración.
+
+``` mermaid
+flowchart TD
+    A([INICIO]) --> B{condición}
+    B -->|Sí| C[instrucciones]
+    C --> B
+    B -->|No| D([continúa])
+```
+
+!!! warning "Bucle infinito"
+
+    Si la condición nunca se vuelve falsa, el ciclo se repite indefinidamente. Siempre debe existir una instrucción dentro del bloque que haga que la condición eventualmente sea falsa.
+
+### De diagrama a código { #while-transition }
+
+=== "Diagrama de flujo"
+
+    ``` mermaid
+    flowchart TD
+        A([INICIO]) --> B["n = 5"]
+        B --> C{"n > 0"}
+        C -->|Sí| D@{ shape: doc, label: "n" }
+        D --> E["n = n - 1"]
+        E --> C
+        C -->|No| F@{ shape: doc, label: "\"Fin\"" }
+        F --> G([FIN])
+    ```
+
+=== "Código Python"
+
+    ```python
+    n = 5
+
+    while n > 0:
+        print(f"n= {n}")
+        n = n - 1
+
+    print("Fin")
+    ```
+
+=== "Salida"
+
+    ```
+    n= 5
+    n= 4
+    n= 3
+    n= 2
+    n= 1
+    Fin
+    ```
+
+!!! danger "Bucle infinito"
+
+    Si ninguna instrucción dentro del bloque modifica la condición, el bucle se repetirá indefinidamente. Siempre debe existir una instrucción que eventualmente haga la condición falsa.
+
+    ```python
+    n = 5
+    while n > 0:
+        print("Hola")   # n nunca cambia → bucle infinito
+    ```
+
+### Ejemplos resueltos { #while-examples }
+
+??? example "Ejemplo 1: Validación de un número"
+
+    Solicitar un número entre 1 y 9. Si el usuario ingresa un valor fuera del rango, mostrar error y pedir de nuevo.
+
+    === "Diagrama de flujo"
+
+        ``` mermaid
+        flowchart TD
+            A([INICIO]) --> B["noValido = True"]
+            B --> C{noValido}
+            C -->|Sí| D@{ shape: doc, label: "\"Ingrese un número entre 1 y 9\"" }
+            D --> E[/num/]
+            E --> F{"num >= 1 y num <= 9"}
+            F -->|Sí| G["noValido = False"]
+            F -->|No| H@{ shape: doc, label: "\"Error: el número está fuera del rango.\"" }
+            G --> C
+            H --> C
+            C -->|No| I@{ shape: doc, label: "\"El número\", num, \"es correcto.\"" }
+            I --> J([FIN])
+        ```
+
+    === "Código Python"
+
+        ```python
+        noValido = True
+
+        while noValido:
+            num = int(input("Ingrese un número entre 1 y 9: "))
+            if num >= 1 and num <= 9:
+                noValido = False
+            else:
+                print("Error: el número está fuera del rango.")
+
+        print(f"El número {num} es correcto.")
+        ```
+
+    === "Ejecución de ejemplo"
+
+        ```
+        Ingrese un número entre 1 y 9: 15
+        Error: el número está fuera del rango.
+        Ingrese un número entre 1 y 9: 0
+        Error: el número está fuera del rango.
+        Ingrese un número entre 1 y 9: 7
+        El número 7 es correcto.
+        ```
+
+    !!! note "Variable de control"
+
+        La variable `noValido` actúa como **variable de control**: comienza en `True` asumiendo que el dato es inválido, y solo se pone en `False` cuando el usuario ingresa un valor correcto.
+
+??? example "Ejemplo 2: Invertir un número"
+
+    Recibir un número mayor a cero, extraer sus dígitos y mostrarlo invertido.
+
+    === "Diagrama de flujo"
+
+        ``` mermaid
+        flowchart TD
+            A([INICIO]) --> B["noValido = True"]
+            B --> C{noValido}
+            C -->|Sí| D[/num/]
+            D --> E{"Es número\ny num > 0"}
+            E -->|Sí| F["noValido = False"]
+            E -->|No| G@{ shape: doc, label: "\"Error\"" }
+            F --> C
+            G --> C
+            C -->|No| H["ni = 0"]
+            H --> I{"num > 0"}
+            I -->|Sí| J["d = num % 10"]
+            J --> K["ni = ni * 10 + d"]
+            K --> L["num = num // 10"]
+            L --> I
+            I -->|No| M@{ shape: doc, label: "ni" }
+            M --> N([FIN])
+        ```
+
+    === "Código Python"
+
+        ```python
+        noValido = True
+
+        while noValido:
+            try:
+                num = int(input("Ingrese un número: "))
+                if num > 0:
+                    noValido = False
+                else:
+                    print("Error: el número debe ser mayor a 0.")
+            except:
+                print("Error: la entrada no es un número.")
+
+        ni = 0
+        while num > 0:
+            d = num % 10        # extrae el último dígito
+            ni = ni * 10 + d    # lo agrega al número invertido
+            num = num // 10     # elimina el último dígito
+
+        print("Número invertido:", ni)
+        ```
+
+    === "Ejecución de ejemplo"
+
+        ```
+        Ingrese un número: 2o2e
+        Error: la entrada no es un número.
+        Ingrese un número: -5
+        Error: el número debe ser mayor a 0.
+        Ingrese un número: 2023
+        Número invertido: 3202
+        ```
+
+    !!! tip "¿Cómo funciona la inversión?"
+
+        El algoritmo extrae los dígitos de derecha a izquierda usando el operador módulo `%` y los va acumulando en `ni`:
+
+        | Iteración | `num` | `d` (`num % 10`) | `ni` (`ni * 10 + d`) |
+        | :---: | :---: | :---: | :---: |
+        | 1 | 2023 | 3 | 3 |
+        | 2 | 202 | 2 | 32 |
+        | 3 | 20 | 0 | 320 |
+        | 4 | 2 | 2 | 3202 |
+        | Fin | 0 | — | 3202 |
+
 El primer mecanismo que existe en Python para repetir instrucciones es usar la sentencia `#!python while`. La semántica tras esta sentencia es: "Mientras se cumpla una condición[^1] haz algo".
 
 Veamos un primer <span class="example">ejemplo:material-flash:</span> con un sencillo bucle que repite un saludo mientras así se desee:
@@ -234,6 +424,39 @@ En comparación con el enfoque "clásico" del bucle `#!python while`:
 - Como ^^desventaja^^ el código resulta menos "idiomático" ya que la condición del bucle no nos da ninguna pista de lo que está ocurriendo.
 
 ## La sentencia `for` { #for }
+
+### Diagrama de flujo { #for-flowchart }
+
+La estructura `for` recorre un **conjunto de valores** definido de antemano. Se usa cuando se sabe cuántas veces se va a repetir.
+
+``` mermaid
+flowchart TD
+    A([INICIO]) --> B{quedan valores}
+    B -->|Sí| C["var = valor actual"]
+    C --> D[instrucciones]
+    D --> B
+    B -->|No| E([continúa])
+```
+
+??? example "Ejemplo resuelto: Pago de remuneraciones"
+
+    Calcular el sueldo bruto y líquido de cada empleado. El valor hora es \$2.500 y el líquido corresponde al 80% del bruto.
+
+    ``` mermaid
+    flowchart TD
+        A([INICIO]) --> B@{ shape: doc, label: "\"Ingrese cantidad de empleados\"" }
+        B --> C[/cant_empleados/]
+        C --> D["indice = 0"]
+        D --> E{"indice < cant_empleados"}
+        E -->|Sí| F@{ shape: doc, label: "\"Ingrese cantidad de horas\"" }
+        F --> G[/cant_horas/]
+        G --> H["sueldo_bruto = cant_horas * 2500"]
+        H --> I["sueldo_liquido = sueldo_bruto * 0.8"]
+        I --> J@{ shape: doc, label: "\"Sueldo bruto:\", sueldo_bruto, \"Sueldo líquido:\", sueldo_liquido" }
+        J --> K["indice = indice + 1"]
+        K --> E
+        E -->|No| L([FIN])
+    ```
 
 Python permite recorrer aquellos tipos de datos que sean **iterables**, es decir, que admitan iterar[^2] sobre ellos. Algunos ejemplos de **tipos y estructuras de datos iterables** (_que permiten ser iteradas/recorridas_) son: [cadenas de texto](../datatypes/strings.md), [listas](../datastructures/lists.md), [tuplas](../datastructures/tuples.md), [diccionarios](../datastructures/dicts.md), [ficheros](../datastructures/files.md), etc.
 
@@ -503,6 +726,13 @@ Veamos un <span class="example">ejemplo:material-flash:</span> de **2 bucles ani
 
 ## Ejercicios { #exercises }
 
+### Diagramas de flujo { #exercises-flowcharts }
+
+1. Diseña el diagrama de flujo de un algoritmo que reciba un número mayor a cero, extraiga sus dígitos y lo muestre invertido.
+2. Diseña el diagrama de flujo del algoritmo que calcule el promedio de notas de un curso. Por cada estudiante se ingresan sus notas; al terminar, el programa pregunta si se desea ingresar otro estudiante. Al finalizar, muestra el promedio general del curso.
+
+### Programación { #exercises-coding }
+
 1. Escribe un programa que solicite un número entero positivo y muestre la suma de todos los números del 1 hasta ese número.
 2. Escribe un programa que solicite un número entero positivo y muestre su tabla de multiplicar del 1 al 10.
 3. Escribe un programa que solicite un número entero positivo y determine si es **primo** (solo divisible por 1 y por sí mismo).
@@ -519,6 +749,8 @@ Veamos un <span class="example">ejemplo:material-flash:</span> de **2 bucles ani
 
 6. Escribe un programa que solicite números al usuario indefinidamente hasta que ingrese un 0. Al terminar muestra la suma, el promedio, el mayor y el menor de los números ingresados.
 7. Escribe un programa que calcule el promedio de notas de un curso. Por cada estudiante se ingresan sus notas; al terminar se pregunta si se desea ingresar otro estudiante. Al finalizar muestra el promedio general del curso.
+8. Escribe un programa que solicite la cantidad de pasos caminados y calcule la distancia en kilómetros (1 paso = 80 cm). El programa debe validar que el número de pasos sea positivo.
+9. Escribe un programa que calcule la suma de los números del 1 al N, donde N es ingresado por el usuario. Valida que N sea mayor a 0.
 [^1]: Esta condición del bucle se conoce como **condición de parada**.
 [^2]: Realizar cierta acción varias veces. En este caso la acción es tomar cada elemento.
 [^3]: Una de las grandes ventajas es que la "lista" generada no se construye explícitamente, sino que cada valor se genera bajo demanda. Esta técnica mejora el consumo de recursos, especialmente en términos de memoria.

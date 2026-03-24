@@ -14,8 +14,8 @@ El ciclo `for` recorre un **conjunto de valores** definido de antemano. A difere
 
 ``` mermaid
 flowchart TD
-    A([INICIO]) --> B{"¿quedan valores?"}
-    B -->|Sí| C["var ← valor actual"]
+    A([INICIO]) --> B{"quedan valores"}
+    B -->|Sí| C["var = valor actual"]
     C --> D[instrucciones]
     D --> B
     B -->|No| E([continúa])
@@ -113,8 +113,8 @@ Una empresa quiere calcular el sueldo **bruto** y **líquido** de cada empleado.
 1. Ingresar y validar la cantidad de empleados.
 2. Por cada empleado:
     1. Ingresar y validar la cantidad de horas trabajadas.
-    2. Calcular el sueldo bruto: `cant_horas × 2500`
-    3. Calcular el sueldo líquido: `sueldo_bruto × 0.8`
+    2. Calcular el sueldo bruto: `cant_horas * 2500`
+    3. Calcular el sueldo líquido: `sueldo_bruto * 0.8`
     4. Mostrar ambos sueldos.
 
 ??? info "Ver solución"
@@ -124,16 +124,16 @@ Una empresa quiere calcular el sueldo **bruto** y **líquido** de cada empleado.
     ``` mermaid
     flowchart TD
         A([INICIO]) --> B[/Ingresar cant_empleados/]
-        B --> C{"¿cant_empleados\n> 0?"}
+        B --> C{"cant_empleados\n> 0"}
         C -->|No| B
-        C -->|Sí| D{"¿indice <\ncant_empleados?"}
+        C -->|Sí| D{"indice <\ncant_empleados"}
         D -->|Sí| E[/Ingresar cant_horas/]
-        E --> F{"¿cant_horas\n> 0?"}
+        E --> F{"cant_horas\n> 0"}
         F -->|No| E
-        F -->|Sí| G["sueldo_bruto ← cant_horas × 2500"]
-        G --> H["sueldo_liquido ← sueldo_bruto × 0.8"]
+        F -->|Sí| G["sueldo_bruto = cant_horas * 2500"]
+        G --> H["sueldo_liquido = sueldo_bruto * 0.8"]
         H --> I[\"Mostrar sueldo_bruto y sueldo_liquido"\]
-        I --> J["indice ← indice + 1"]
+        I --> J["indice = indice + 1"]
         J --> D
         D -->|No| K([FIN])
     ```

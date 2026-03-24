@@ -203,11 +203,13 @@ Cada símbolo del diagrama de flujo tiene su equivalente directo en Python.
 
     ``` mermaid
     flowchart TD
-        A([INICIO]) --> B[/Ingresar x/]
-        B --> C[/Ingresar m y c/]
-        C --> D["y ← m × x + c"]
-        D --> E@{ shape: doc, label: "\"El resultado es:\", y" }
-        E --> F([FIN])
+        A([INICIO]) --> B@{ shape: doc, label: "\"Ingrese el valor de x:\"" }
+        B --> C[/x/]
+        C --> D@{ shape: doc, label: "\"Ingrese los valores de m y c:\"" }
+        D --> E[/m, c/]
+        E --> F["y = m * x + c"]
+        F --> G@{ shape: doc, label: "\"El resultado es:\", y" }
+        G --> H([FIN])
     ```
 
 === "Código Python"
@@ -230,12 +232,12 @@ La estructura `if` en Python corresponde al rombo de decisión del diagrama:
 
     ``` mermaid
     flowchart TD
-        A([INICIO]) --> B[/Ingresar x/]
-        B --> C{"¿x < 20?"}
+        A([INICIO]) --> B[/x/]
+        B --> C{"x < 20"}
         C -->|Sí| D@{ shape: doc, label: "\"Es menor que 20\"" }
         C -->|No| E
         D --> E
-        E --> F{"¿x < 10?"}
+        E --> F{"x < 10"}
         F -->|Sí| G@{ shape: doc, label: "\"Es menor que 10\"" }
         F -->|No| H([FIN])
         G --> H
@@ -265,189 +267,6 @@ La estructura `if` en Python corresponde al rombo de decisión del diagrama:
     # resto del programa (fuera del if)
     ```
 
-### Estructura repetitiva (WHILE) { #while-transition }
-
-El bucle `while` repite un bloque mientras la condición sea verdadera:
-
-=== "Diagrama de flujo"
-
-    ``` mermaid
-    flowchart TD
-        A([INICIO]) --> B["n ← 5"]
-        B --> C{"¿n > 0?"}
-        C -->|Sí| D@{ shape: doc, label: "n" }
-        D --> E["n ← n - 1"]
-        E --> C
-        C -->|No| F@{ shape: doc, label: "\"Fin\"" }
-        F --> G([FIN])
-    ```
-
-=== "Código Python"
-
-    ```python
-    n = 5
-
-    while n > 0:
-        print(f"n= {n}")
-        n = n - 1
-
-    print("Fin")
-    ```
-
-=== "Salida"
-
-    ```
-    n= 5
-    n= 4
-    n= 3
-    n= 2
-    n= 1
-    Fin
-    ```
-
-!!! danger "Bucle infinito"
-
-    Si ninguna instrucción dentro del bloque modifica la condición, el bucle se repetirá indefinidamente. Siempre debe existir una instrucción que eventualmente haga la condición falsa.
-
-    ```python
-    n = 5
-    while n > 0:
-        print("Hola")   # n nunca cambia → bucle infinito
-    ```
-
----
-
-## Ejemplos resueltos { #examples }
-
-### Ejemplo 1: Validación de un número { #example-validation }
-
-Solicitar un número entre 1 y 9. Si el usuario ingresa un valor fuera del rango, mostrar error y pedir de nuevo.
-
-??? info "Ver solución"
-
-    === "Diagrama de flujo"
-
-        ``` mermaid
-        flowchart TD
-            A([INICIO]) --> B["noValido ← True"]
-            B --> C{"¿noValido?"}
-            C -->|Sí| D[/Ingresar num/]
-            D --> E{"¿num >= 1\ny num <= 9?"}
-            E -->|Sí| F["noValido ← False"]
-            E -->|No| G@{ shape: doc, label: "\"Error: el número está fuera del rango.\"" }
-            F --> C
-            G --> C
-            C -->|No| H@{ shape: doc, label: "\"El número\", num, \"es correcto.\"" }
-            H --> I([FIN])
-        ```
-
-    === "Código Python"
-
-        ```python
-        noValido = True
-
-        while noValido:
-            num = int(input("Ingrese un número entre 1 y 9: "))
-            if num >= 1 and num <= 9:
-                noValido = False
-            else:
-                print("Error: el número está fuera del rango.")
-
-        print(f"El número {num} es correcto.")
-        ```
-
-    === "Ejecución de ejemplo"
-
-        ```
-        Ingrese un número entre 1 y 9: 15
-        Error: el número está fuera del rango.
-        Ingrese un número entre 1 y 9: 0
-        Error: el número está fuera del rango.
-        Ingrese un número entre 1 y 9: 7
-        El número 7 es correcto.
-        ```
-
-    !!! note "Variable de control"
-
-        La variable `noValido` actúa como **variable de control**: comienza en `True` asumiendo que el dato es inválido, y solo se pone en `False` cuando el usuario ingresa un valor correcto.
-
-### Ejemplo 2: Invertir un número { #example-reverse }
-
-Recibir un número mayor a cero, extraer sus dígitos y mostrarlo invertido. Si el usuario ingresa algo que no es un número, mostrar error.
-
-??? info "Ver solución"
-
-    === "Diagrama de flujo"
-
-        ``` mermaid
-        flowchart TD
-            A([INICIO]) --> B["noValido ← True"]
-            B --> C{"¿noValido?"}
-            C -->|Sí| D[/Ingresar num/]
-            D --> E{"¿Es número\ny num > 0?"}
-            E -->|Sí| F["noValido ← False"]
-            E -->|No| G@{ shape: doc, label: "\"Error\"" }
-            F --> C
-            G --> C
-            C -->|No| H["ni ← 0"]
-            H --> I{"¿num > 0?"}
-            I -->|Sí| J["d ← num % 10"]
-            J --> K["ni ← ni × 10 + d"]
-            K --> L["num ← num // 10"]
-            L --> I
-            I -->|No| M@{ shape: doc, label: "ni" }
-            M --> N([FIN])
-        ```
-
-    === "Código Python"
-
-        ```python
-        noValido = True
-
-        while noValido:
-            try:
-                num = int(input("Ingrese un número: "))
-                if num > 0:
-                    noValido = False
-                else:
-                    print("Error: el número debe ser mayor a 0.")
-            except:
-                print("Error: la entrada no es un número.")
-
-        ni = 0
-        while num > 0:
-            d = num % 10        # extrae el último dígito
-            ni = ni * 10 + d    # lo agrega al número invertido
-            num = num // 10     # elimina el último dígito
-
-        print("Número invertido:", ni)
-        ```
-
-    === "Ejecución de ejemplo"
-
-        ```
-        Ingrese un número: 2o2e
-        Error: la entrada no es un número.
-        Ingrese un número: -5
-        Error: el número debe ser mayor a 0.
-        Ingrese un número: 2023
-        Número invertido: 3202
-        ```
-
-    !!! tip "¿Cómo funciona la inversión?"
-
-        El algoritmo extrae los dígitos de derecha a izquierda usando el operador módulo `%` y los va acumulando en `ni`:
-
-        | Iteración | `num` | `d` (`num % 10`) | `ni` (`ni * 10 + d`) |
-        | :---: | :---: | :---: | :---: |
-        | 1 | 2023 | 3 | 3 |
-        | 2 | 202 | 2 | 32 |
-        | 3 | 20 | 0 | 320 |
-        | 4 | 2 | 2 | 3202 |
-        | Fin | 0 | — | 3202 |
-
----
-
 ## Ejercicios { #exercises }
 
 1. Escribe un programa que solicite la base y la altura de un triángulo y calcule su área.
@@ -455,5 +274,3 @@ Recibir un número mayor a cero, extraer sus dígitos y mostrarlo invertido. Si 
 3. Escribe un programa que solicite un número entero y determine si es par o impar.
 4. Escribe un programa que solicite la renta anual de una persona y calcule el impuesto según los tramos definidos en la unidad anterior.
 5. Escribe un programa que solicite un año y determine si es bisiesto (múltiplo de 4, excepto los múltiplos de 100 que no sean también múltiplos de 400).
-6. Escribe un programa que solicite la cantidad de pasos caminados y calcule la distancia en kilómetros (1 paso = 80 cm). El programa debe validar que el número de pasos sea positivo.
-7. Escribe un programa que calcule la suma de los números del 1 al N, donde N es ingresado por el usuario. Valida que N sea mayor a 0.

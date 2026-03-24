@@ -79,8 +79,8 @@ Los diagramas de flujo usan formas geométricas estandarizadas. A continuación 
 flowchart TD
     A([Inicio / Fin])
     B[Proceso\neg: pago = cantidad * precio]
-    C{Decisión\neg: ¿x mayor que 0?}
-    D[/Entrada\neg: Ingresar nombre/]
+    C{Decisión\neg: x mayor que 0}
+    D[/nombre/]
     E@{ shape: doc, label: "Imprimir\neg: \"Hola mundo\"" }
 ```
 
@@ -89,7 +89,7 @@ flowchart TD
 | Óvalo | **Inicio / Fin** | Marca el comienzo o el final. Todo diagrama tiene uno de cada uno. |
 | Rectángulo | **Proceso** | Operación o cálculo. Ejemplo: `pago = cantidad * precio` |
 | Rombo | **Decisión** | Evalúa una condición. Tiene dos salidas: **Sí** y **No**. |
-| Paralelogramo | **Entrada** | Ingreso de datos por teclado. Ejemplo: `Ingresar nombre` |
+| Paralelogramo | **Entrada** | Ingreso de datos por teclado. Se escribe solo el nombre de la variable. Ejemplo: `nombre`. Si son varias, separar con comas: `m, c`. |
 | Rectángulo ondulado | **Imprimir** | Muestra información en pantalla. Equivale a `print()` en Python. El contenido siempre va entre comillas. |
 
 ### Líneas de flujo { #line-symbols }
@@ -118,9 +118,9 @@ Cuando una expresión tiene múltiples operadores, el orden de evaluación deter
 
 | Prioridad | Operador | Descripción | Ejemplo |
 | :---: | :---: | --- | --- |
-| 1 (mayor) | `()` | Paréntesis | `(2 + 3) × 4 = 20` |
+| 1 (mayor) | `()` | Paréntesis | `(2 + 3) * 4 = 20` |
 | 2 | `^` | Potencia | `2 ^ 3 = 8` |
-| 3 | `×` `/` `%` | Multiplicación, división, módulo | `6 / 2 × 3 = 9` |
+| 3 | `*` `/` `%` | Multiplicación, división, módulo | `6 / 2 * 3 = 9` |
 | 4 (menor) | `+` `-` | Suma, resta | `2 + 3 - 1 = 4` |
 
 ### Operadores de comparación { #comparison-precedence }
@@ -147,7 +147,7 @@ Se evalúan **después** de los de comparación y permiten combinar condiciones.
 | 3 (menor) | `or` | Verdadero si **al menos una** condición es verdadera |
 
 !!! info "Orden general"
-    `()` → `^` → `×` `/` → `+` `-` → comparación → `not` → `and` → `or`
+    `()` → `^` → `*` `/` → `+` `-` → comparación → `not` → `and` → `or`
 
 ### Ejercicios { #precedence-exercises }
 
@@ -261,7 +261,7 @@ Ejecuta un bloque **solo si** la condición es verdadera. Si es falsa, lo omite.
 
 ``` mermaid
 flowchart TD
-    A([INICIO]) --> B{¿condición?}
+    A([INICIO]) --> B{condición}
     B -->|Sí| C[instrucciones]
     B -->|No| D
     C --> D([continúa])
@@ -273,40 +273,11 @@ Ejecuta un bloque distinto dependiendo de si la condición es verdadera o falsa.
 
 ``` mermaid
 flowchart TD
-    A([INICIO]) --> B{¿condición?}
+    A([INICIO]) --> B{condición}
     B -->|Sí| C[instrucciones A]
     B -->|No| D[instrucciones B]
     C --> E([continúa])
     D --> E
-```
-
-### Estructura WHILE { #while }
-
-Repite un bloque **mientras** la condición sea verdadera. Se evalúa **antes** de cada iteración.
-
-``` mermaid
-flowchart TD
-    A([INICIO]) --> B{¿condición?}
-    B -->|Sí| C[instrucciones]
-    C --> B
-    B -->|No| D([continúa])
-```
-
-!!! warning "Bucle infinito"
-
-    Si la condición nunca se vuelve falsa, el ciclo se repite indefinidamente. Siempre debe existir una instrucción dentro del bloque que haga que la condición eventualmente sea falsa.
-
-### Estructura FOR { #for }
-
-Recorre un **conjunto de valores** definido de antemano. Se usa cuando se sabe cuántas veces se va a repetir.
-
-``` mermaid
-flowchart TD
-    A([INICIO]) --> B{¿quedan valores?}
-    B -->|Sí| C["var = valor actual"]
-    C --> D[instrucciones]
-    D --> B
-    B -->|No| E([continúa])
 ```
 
 ---
@@ -353,11 +324,11 @@ flowchart TD
         B --> C[/tipo_cliente/]
         C --> B2@{ shape: doc, label: "\"Ingrese cantidad de libros\"" }
         B2 --> C2[/cant_libros/]
-        C2 --> D{"¿tipo_cliente == estudiante?"}
+        C2 --> D{"tipo_cliente == estudiante"}
         D -->|Sí| E["descuento = 0.15"]
-        D -->|No| F{"¿tipo_cliente == docente?"}
+        D -->|No| F{"tipo_cliente == docente"}
         F -->|Sí| G["descuento = 0.20"]
-        F -->|No| H{"¿tipo_cliente == club?"}
+        F -->|No| H{"tipo_cliente == club"}
         H -->|Sí| I["descuento = 0.25"]
         H -->|No| J["descuento = 0"]
         E --> K["precio_final = cant_libros * 5000 * (1 - descuento)"]
@@ -366,49 +337,6 @@ flowchart TD
         J --> K
         K --> L@{ shape: doc, label: "\"El precio final es:\", precio_final" }
         L --> M([FIN])
-    ```
-
-### Ejemplo 3: Validación de un número { #example-validation }
-
-Solicitar al usuario un número entre 1 y 9. Si ingresa un valor fuera del rango, mostrar error y volver a pedir.
-
-??? info "Ver solución"
-
-    ``` mermaid
-    flowchart TD
-        A([INICIO]) --> B["noValido = True"]
-        B --> C{¿noValido?}
-        C -->|Sí| D@{ shape: doc, label: "\"Ingrese un número entre 1 y 9\"" }
-        D --> E[/num/]
-        E --> F{"¿num >= 1 y num <= 9?"}
-        F -->|Sí| G["noValido = False"]
-        F -->|No| H@{ shape: doc, label: "\"Error\"" }
-        G --> C
-        H --> C
-        C -->|No| I@{ shape: doc, label: "num, \"es correcto\"" }
-        I --> J([FIN])
-    ```
-
-### Ejemplo 4: Pago de remuneraciones { #example-payroll }
-
-Calcular el sueldo bruto y líquido de cada empleado. El valor hora es \$2.500 y el líquido corresponde al 80% del bruto.
-
-??? info "Ver solución"
-
-    ``` mermaid
-    flowchart TD
-        A([INICIO]) --> B@{ shape: doc, label: "\"Ingrese cantidad de empleados\"" }
-        B --> C[/cant_empleados/]
-        C --> D["indice = 0"]
-        D --> E{"¿indice < cant_empleados?"}
-        E -->|Sí| F@{ shape: doc, label: "\"Ingrese cantidad de horas\"" }
-        F --> G[/cant_horas/]
-        G --> H["sueldo_bruto = cant_horas * 2500"]
-        H --> I["sueldo_liquido = sueldo_bruto * 0.8"]
-        I --> J@{ shape: doc, label: "\"Sueldo bruto:\", sueldo_bruto, \"Sueldo líquido:\", sueldo_liquido" }
-        J --> K["indice = indice + 1"]
-        K --> E
-        E -->|No| L([FIN])
     ```
 
 ---
@@ -429,5 +357,3 @@ Calcular el sueldo bruto y líquido de cada empleado. El valor hora es \$2.500 y
     | Más de \$2.500.000 | 45% |
 
 5. Diseña el diagrama de flujo de un algoritmo que solicite un año e indique si es bisiesto. Un año es bisiesto si es múltiplo de 4, excepto los múltiplos de 100, que solo son bisiestos si también son múltiplos de 400.
-6. Diseña el diagrama de flujo de un algoritmo que reciba un número mayor a cero, extraiga sus dígitos y lo muestre invertido.
-7. Diseña el diagrama de flujo del algoritmo que calcule el promedio de notas de un curso. Por cada estudiante se ingresan sus notas; al terminar, el programa pregunta si se desea ingresar otro estudiante. Al finalizar, muestra el promedio general del curso.
