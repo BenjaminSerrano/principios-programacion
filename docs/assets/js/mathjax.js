@@ -5,13 +5,15 @@ window.MathJax = {
     processEscapes: true,
     processEnvironments: true,
   },
-};
-
-document$.subscribe(() => {
-  if (window.MathJax && MathJax.typesetPromise) {
-    MathJax.startup.output.clearCache();
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typesetPromise();
+  startup: {
+    ready() {
+      MathJax.startup.defaultReady();
+      document$.subscribe(() => {
+        MathJax.startup.output.clearCache();
+        MathJax.typesetClear();
+        MathJax.texReset();
+        MathJax.typesetPromise();
+      });
+    }
   }
-});
+};
