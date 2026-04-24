@@ -123,16 +123,16 @@ Una empresa quiere calcular el sueldo **bruto** y **líquido** de cada empleado.
 
     ``` mermaid
     flowchart TD
-        A([INICIO]) --> B[/Ingresar cant_empleados/]
+        A([INICIO]) --> B[/cant_empleados/]
         B --> C{"cant_empleados\n> 0"}
         C -->|No| B
         C -->|Sí| D{"indice <\ncant_empleados"}
-        D -->|Sí| E[/Ingresar cant_horas/]
+        D -->|Sí| E[/cant_horas/]
         E --> F{"cant_horas\n> 0"}
         F -->|No| E
-        F -->|Sí| G["sueldo_bruto = cant_horas * 2500"]
-        G --> H["sueldo_liquido = sueldo_bruto * 0.8"]
-        H --> I[\"Mostrar sueldo_bruto y sueldo_liquido"\]
+        F -->|Sí| G["sueldo_bruto =<br/>cant_horas * 2500"]
+        G --> H["sueldo_liquido =<br/>sueldo_bruto * 0.8"]
+        H --> I@{ shape: doc, label: "\"sueldo_bruto,<br/>sueldo_liquido\"" }
         I --> J["indice = indice + 1"]
         J --> D
         D -->|No| K([FIN])

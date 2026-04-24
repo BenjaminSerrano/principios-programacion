@@ -286,7 +286,13 @@ Véanse las **tablas de la verdad** para cada operador lógico:
 
 !!! exercise "Ejercicio"
 
-    [pypas](../../third-party/learning/pypas.md) &nbsp;:fontawesome-solid-hand-holding-heart:{ .acc .slide } `leap-year`
+    Escribe un programa que solicite un año e indique si es **bisiesto**. Un año es bisiesto si es múltiplo de 4, excepto los múltiplos de 100, que solo son bisiestos si también son múltiplos de 400.
+
+    | Año | ¿Bisiesto? |
+    | --- | --- |
+    | 2024 | Sí |
+    | 1900 | No |
+    | 2000 | Sí |
 
 ### Cortocircuito lógico { #short-circuit }
 
@@ -402,7 +408,7 @@ De hecho, si lo pensamos, estamos reproduciendo bastante bien el _lenguaje natur
 
 !!! exercise "Ejercicio"
 
-    [pypas](../../third-party/learning/pypas.md) &nbsp;:fontawesome-solid-hand-holding-heart:{ .acc .slide } `marvel-akinator`
+    Escribe un programa que solicite si una persona tiene licencia de conducir (`s/n`) y si es mayor de 18 años (`s/n`). Muestra si puede conducir legalmente. Si no puede, indica el motivo.
 
 ### Valor nulo { #none }
 
@@ -663,7 +669,7 @@ Esto se debe a que Python trata a las constantes `#!python RED_HEXA GREEN_HEXA B
 
 !!! exercise "Ejercicio"
 
-    [pypas](../../third-party/learning/pypas.md) &nbsp;:fontawesome-solid-hand-holding-heart:{ .acc .slide } `simple-op`
+    Usando `match-case`, escribe un programa que solicite el número de un día de la semana (1–7) y muestre su nombre. Si el número está fuera del rango, muestra `"Día inválido"`.
 
 ### Patrones avanzados { #advanced-patterns }
 
