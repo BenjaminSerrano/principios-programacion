@@ -295,9 +295,9 @@ flowchart TD
 
     ``` mermaid
     flowchart TD
-        A([INICIO]) --> B@{ shape: doc, label: "\"Ingrese cantidad de menores de edad\"" }
+        A([INICIO]) --> B@{ shape: doc, label: "\"Ingrese cantidad<br/>de menores de edad\"" }
         B --> C[/cant_me/]
-        C --> D@{ shape: doc, label: "\"Ingrese cantidad de mayores de edad\"" }
+        C --> D@{ shape: doc, label: "\"Ingrese cantidad<br/>de mayores de edad\"" }
         D --> E[/cant_ma/]
         E --> F["pago_me = cant_me * 2000"]
         F --> G["pago_ma = cant_ma * 5000"]
@@ -331,11 +331,11 @@ flowchart TD
         F -->|No| H{"tipo_cliente == club"}
         H -->|Sí| I["descuento = 0.25"]
         H -->|No| J["descuento = 0"]
-        E --> K["precio_final = cant_libros * 5000 * (1 - descuento)"]
+        E --> K["precio_final =<br/>cant_libros * 5000 * (1 - descuento)"]
         G --> K
         I --> K
         J --> K
-        K --> L@{ shape: doc, label: "\"El precio final es:\", precio_final" }
+        K --> L@{ shape: doc, label: "\"El precio final es:\"<br/>precio_final" }
         L --> M([FIN])
     ```
 

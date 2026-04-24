@@ -205,7 +205,7 @@ Cada símbolo del diagrama de flujo tiene su equivalente directo en Python.
     flowchart TD
         A([INICIO]) --> B@{ shape: doc, label: "\"Ingrese el valor de x:\"" }
         B --> C[/x/]
-        C --> D@{ shape: doc, label: "\"Ingrese los valores de m y c:\"" }
+        C --> D@{ shape: doc, label: "\"Ingrese los valores<br/>de m y c:\"" }
         D --> E[/m, c/]
         E --> F["y = m * x + c"]
         F --> G@{ shape: doc, label: "\"El resultado es:\", y" }
