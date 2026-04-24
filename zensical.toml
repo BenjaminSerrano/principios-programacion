@@ -9,6 +9,10 @@ site_author = "Benjamin Serrano"
 site_url = "https://benjaminserrano.github.io/principios-programacion"
 
 extra_css = ["assets/css/custom.css"]
+
+[project.analytics]
+provider = "google"
+property = "G-KXC26HYPSY"
 extra_javascript = [
     "assets/js/clipboard.js",
     "assets/js/mathjax.js",
