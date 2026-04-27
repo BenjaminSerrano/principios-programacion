@@ -30,37 +30,18 @@ property = "G-KXC26HYPSY"
 
 [[project.nav]]
 "Fundamentos del lenguaje" = [
-    "core/index.md",
-    {"Introducción" = [
-        "core/introduction/index.md",
-        "core/introduction/machine.md",
-        "core/introduction/flowcharts.md",
-        "core/introduction/coding.md",
-    ]},
-    {"Entornos de desarrollo" = [
-        "core/devenv/index.md",
-        "core/devenv/vscode.md",
-    ]},
-    {"Tipos de datos" = [
-        "core/datatypes/index.md",
-        "core/datatypes/data.md",
-        "core/datatypes/numbers.md",
-        "core/datatypes/strings.md",
-    ]},
-    {"Control de flujo" = [
-        "core/controlflow/index.md",
-        "core/controlflow/conditionals.md",
-        "core/controlflow/loops.md",
-        "core/controlflow/for-examples.md",
-    ]},
-    {"Estructuras de datos" = [
-        "core/datastructures/index.md",
-        "core/datastructures/lists.md",
-    ]},
-    {"Modularidad" = [
-        "core/modularity/index.md",
-        "core/modularity/functions.md",
-    ]},
+    "core/introduction/machine.md",
+    "core/devenv/vscode.md",
+    "core/datatypes/data.md",
+    "core/datatypes/numbers.md",
+    "core/introduction/flowcharts.md",
+    "core/modularity/functions.md",
+    "core/controlflow/conditionals.md",
+    "core/introduction/coding.md",
+    "core/controlflow/loops.md",
+    "core/controlflow/for-examples.md",
+    "core/datatypes/strings.md",
+    "core/datastructures/lists.md",
 ]
 
 # ==============================================================================
